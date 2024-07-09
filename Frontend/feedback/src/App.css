@@ -1,0 +1,26 @@
+body{
+  padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+form input, form textarea {
+  padding: 5px;
+  width: 350px;
+}
+
+form button:hover{
+  cursor: se-resize;
+}
+form button{
+  padding: 5px
+}
+
+.write{
+  display: block;
+}
