@@ -22,6 +22,10 @@ public class FeedbackController {
     public List<Feedback> getAllFeedback() {
         return feedbackService.getAllFeedback();
     }
+    @DeleteMapping("/{id}")
+    public void deleteFeedback(@PathVariable Long id) {
+        feedbackService.deleteFeedback(id);
+    }
 
 }
 
