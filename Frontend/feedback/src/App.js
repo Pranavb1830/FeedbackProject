@@ -9,6 +9,7 @@ function App() {
   const [feedbackList, setFeedbackList] = useState([]);
 
   useEffect(() => {
+    // Fetch all feedback on component mount
     axios.get('http://localhost:8080/feedback')
       .then(response => {
         setFeedbackList(response.data);
@@ -18,13 +19,13 @@ function App() {
       });
   }, []);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (name && email && feedback) {
       const newFeedback = { name, email, feedback };
       axios.post('http://localhost:8080/feedback', newFeedback)
         .then(response => {
-          setFeedbackList([...feedbackList, newFeedback]);
+          setFeedbackList([...feedbackList, response.data]);
           setName('');
           setEmail('');
           setFeedback('');
@@ -37,54 +38,53 @@ function App() {
     }
   };
 
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:8080/feedback/${id}`)
+      .then(() => {
+        setFeedbackList(feedbackList.filter(feedbackItem => feedbackItem.id !== id));
+      })
+      .catch(error => {
+        console.error('There was an error deleting the feedback!', error);
+      });
+  };
+
   return (
     <div className="App">
       <h1>Feedback Form</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor='name'>Name:</label>
+          <label>Name:</label>
           <input
-            className='write'
-            id='name'
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name" 
-            required
-            />
-        </div>
-        <div>
-          <label htmlFor='mail'>Email:</label>
-          <input
-            className='write'
-            id='mail'
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email" 
-            required
           />
         </div>
         <div>
-          <label htmlFor='fb'>Feedback:</label>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Feedback:</label>
           <textarea
-            className='write'
-            id='fb'
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Write your feedback" 
-            required
           />
         </div>
         <button type="submit">Submit</button>
       </form>
       <h2>Feedback List</h2>
       <ul>
-        {feedbackList.map((feedbackItem, index) => (
-          <li key={index}>
+        {feedbackList.map((feedbackItem) => (
+          <li key={feedbackItem.id}>
             <strong>Name:</strong> {feedbackItem.name}<br />
             <strong>Email:</strong> {feedbackItem.email}<br />
             <strong>Feedback:</strong> {feedbackItem.feedback}
+            <button className = "button" onClick={() => handleDelete(feedbackItem.id)}>Delete</button>
           </li>
         ))}
       </ul>
@@ -93,3 +93,4 @@ function App() {
 }
 
 export default App;
+
