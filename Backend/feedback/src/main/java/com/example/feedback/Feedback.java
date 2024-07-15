@@ -1,6 +1,7 @@
 package com.example.feedback;
 
 public class Feedback {
+    private Long id;
     private String name;
     private String email;
     private String feedback;
@@ -8,12 +9,19 @@ public class Feedback {
     public Feedback() {
     }
 
-    public Feedback(String name, String email, String feedback) {
+    public Feedback(Long id, String name, String email, String feedback) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.feedback = feedback;
     }
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
