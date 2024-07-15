@@ -20,7 +20,9 @@ form button:hover{
 form button{
   padding: 5px
 }
-
+.button{
+  display: block;
+}
 .write{
   display: block;
 }
