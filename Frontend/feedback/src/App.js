@@ -31,7 +31,7 @@ function App() {
           setFeedback('');
         })
         .catch(error => {
-          console.error('There was an error submitting the feedback!', error);
+          console.error('There was an error submitting the feedback', error);
         });
     } else {
       alert('Please fill in all fields');
@@ -44,7 +44,7 @@ function App() {
         setFeedbackList(feedbackList.filter(feedbackItem => feedbackItem.id !== id));
       })
       .catch(error => {
-        console.error('There was an error deleting the feedback!', error);
+        console.error('There was an error deleting the feedback', error);
       });
   };
 
